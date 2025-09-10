@@ -1,0 +1,54 @@
+{
+  "love_interests": [
+    {
+      "name": "Xavier",
+      "age": "Unknown",
+      "height": "6'1ft - 185cm",
+      "birthday": "October 16th",
+      "sign": "Libra",
+      "evol": "Light",
+      "image": "https://i.pinimg.com/736x/d9/b4/6c/d9b46cf1c16d9159ade4cc319be729b2.jpg",
+      "color": "9370DB"
+    },
+    {
+      "name": "Zayne",
+      "age": "27",
+      "height": "6'1ft - 186cm",
+      "birthday": "September 5th",
+      "sign": "Virgo",
+      "evol": "Ice",
+      "image": "https://assetsio.gnwcdn.com/love-and-deepspace-zayne-adjusts-his-tie-key-art.jpeg?width=690&quality=80&format=jpg&auto=webp",
+      "color": "5AC8FA"
+    },
+    {
+      "name": "Rafayel",
+      "age": "24",
+      "height": "6ft - 183cm",
+      "birthday": "March 6th",
+      "sign": "Pisces",
+      "evol": "Fire",
+      "image": "https://static0.thegamerimages.com/wordpress/wp-content/uploads/2025/02/love-and-deepspace-an-image-of-rafayel-promised-wildfire.jpg?q=70&fit=crop&w=1100&h=618&dpr=1",
+      "color": "800080"
+    },
+    {
+      "name": "Sylus",
+      "age": "28",
+      "height": "6'2ft - 190cm",
+      "birthday": "April 18th",
+      "sign": "Aries",
+      "evol": "Energy Manipulation",
+      "image": "https://pbs.twimg.com/media/Gzg74K8bkAU5Hth?format=jpg&name=large",
+      "color": "B22222"
+    },
+    {
+      "name": "Caleb",
+      "age": "25",
+      "height": "6'2ft - 188cm",
+      "birthday": "June 13th",
+      "sign": "Gemini",
+      "evol": "Gravity Manipulation",
+      "image": "https://assetsio.gnwcdn.com/love-and-deepspace-caleb.jpg?width=690&quality=80&format=jpg&auto=webp",
+      "color": "FF8C00"
+    }
+  ]
+}
