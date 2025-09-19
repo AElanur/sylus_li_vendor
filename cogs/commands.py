@@ -1,30 +1,44 @@
-import discord
-import json
-from .embed_paginator.love_interest_paginator import LoveInterestPaginator
+from resource.json_readers.readers import get_sylus_responses, get_love_interest
+from client.sylus_bot_client import bot
+from .embed.embed_factory import EmbedFactory
+import random
 
+@bot.command()
+async def love_interests(ctx):
+    await ctx.send(
+        "I see you're ready to pick a love interest. I've got a few in stock, "
+        "one really stands out from the rest, if I do say so myself.\nHere are the love interests:"
+    )
+    await show_interests_info(ctx)
 
-def get_love_interest():
-    with open('resource/messages/love_interests.json', 'r') as file:
-        data = json.load(file)
-    return data["love_interests"]
+@bot.command()
+async def pick_love_interest(ctx, message_content):
+    character = get_love_interest()
+    for love_interest in character["love_interests"]:
+        if love_interest['name'].lower() in message_content:
+            chosen = love_interest['name']
+            await ctx.send(
+                f"So, you've made your choice then, kitten?"
+                f"\nYour chosen love interest is: {chosen}"
+            )
+            await show_interest_info(ctx, chosen)
 
+@bot.command()
+async def chosen_interest(ctx):
+    love_interest = get_sylus_responses()
+    for interest in love_interest.keys():
+        if interest.lower() in ctx:
+            responses = love_interest[interest]
+            if isinstance(responses[0], list):
+                responses = [resp[1] for resp in responses]
+            response = random.choice(responses)
+            await ctx.send(response)
+4
 
-async def embed_command(ctx):
-    love_interests = get_love_interest()
-    embeds = []
+async def show_interests_info(ctx):
+    embed = EmbedFactory.love_interests_info_embed()
+    await embed.send_initial(ctx)
 
-    for info in love_interests:
-        embed = discord.Embed(
-            title=info["name"],
-            color=int(info["color"], 16)
-        )
-        embed.add_field(name="Age", value=info["age"], inline=True)
-        embed.add_field(name="Height", value=info["height"], inline=True)
-        embed.add_field(name="Evol", value=info["evol"], inline=False)
-        embed.add_field(name="Birthday", value=info["birthday"], inline=True)
-        embed.add_field(name="Sign", value=info["sign"], inline=True)
-        embed.set_image(url=info["image"])
-        embeds.append(embed)
-
-    paginator = LoveInterestPaginator(embeds)
-    await paginator.send_initial(ctx)
+async def show_interest_info(ctx, name):
+    embed = EmbedFactory.chosen_love_interest_info(name)
+    await ctx.send(embed=embed)

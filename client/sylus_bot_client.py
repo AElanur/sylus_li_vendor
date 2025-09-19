@@ -6,4 +6,4 @@ intents.message_content = True
 intents.members = True
 intents.presences = True
 
-client = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
