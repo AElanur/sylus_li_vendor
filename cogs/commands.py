@@ -1,4 +1,4 @@
-from resource.json_readers.readers import get_sylus_responses, get_love_interest
+from resource.json_readers.readers import get_sylus_responses, get_love_interest, get_sylus_response_upon_picking
 from client.sylus_bot_client import bot
 from .embed.embed_factory import EmbedFactory
 import random
@@ -17,9 +17,10 @@ async def pick_love_interest(ctx, message_content):
     for love_interest in character["love_interests"]:
         if love_interest['name'].lower() in message_content:
             chosen = love_interest['name']
+            sylus_response = get_sylus_response_upon_picking(chosen)
             await ctx.send(
-                f"So, you've made your choice then, kitten?"
-                f"\nYour chosen love interest is: {chosen}"
+                f"{sylus_response}"
+                f"\n**Your chosen love interest is: {chosen}**"
             )
             await show_interest_info(ctx, chosen)
 
@@ -33,7 +34,6 @@ async def chosen_interest(ctx):
                 responses = [resp[1] for resp in responses]
             response = random.choice(responses)
             await ctx.send(response)
-4
 
 async def show_interests_info(ctx):
     embed = EmbedFactory.love_interests_info_embed()
