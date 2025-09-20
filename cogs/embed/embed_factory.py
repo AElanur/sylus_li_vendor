@@ -1,6 +1,10 @@
+from io import BytesIO
+
 import discord
 from resource.json_readers.readers import get_love_interest, get_specific_li
 from ..embed_paginator.love_interest_paginator import LoveInterestPaginator
+from resource.image.study_image import create_study_image
+
 
 class EmbedFactory:
     @staticmethod
@@ -38,3 +42,16 @@ class EmbedFactory:
         embed.add_field(name="Sign", value=love_interest["sign"], inline=True)
         embed.set_image(url=love_interest["image"])
         return embed
+
+    @staticmethod
+    def timer_view(timer_info):
+        image = create_study_image(timer_info)
+        with BytesIO() as image_binary:
+            image.save(image_binary, 'PNG')
+            image_binary.seek(0)
+            file = discord.File(fp=image_binary, filename="timer.png")
+
+            embed = discord.Embed(title=timer_info["title"])
+            embed.set_image(url="attachment://timer.png")
+
+            return embed, file
