@@ -1,3 +1,5 @@
+import asyncio
+
 from resource.json_readers.readers import get_sylus_responses, get_love_interest, get_sylus_response_upon_picking
 from client.sylus_bot_client import bot
 from .embed.embed_factory import EmbedFactory
@@ -41,15 +43,15 @@ async def start_timer(ctx, message_content):
     await ctx.send(
         "You'd like to study now? Sure, I'll set a timer for you, kitten"
     )
-    timer = StudyTimer(message_content, 50)
+    timer = StudyTimer(message_content, 1)
     timer.start_timer()
     timer_info = {
         "title": "Study session",
         "time": timer.amount_of_time,
         "li_study_image": "https://64.media.tumblr.com/a8a1d3b1d02a14bdc8503659de9e6bb5/230b80535a738a55-a3/s540x810/d82ab5b39886c1a3c90c966bcb00d4dcba30e064.gifv"
     }
-    print(timer_info)
-    await show_timer_info(ctx, timer_info)
+    message = await show_timer_info(ctx, timer_info)
+    await edit_embed_periodically(message, timer.amount_of_time)
 
 async def show_interests_info(ctx):
     embed = EmbedFactory.love_interests_info_embed()
@@ -61,4 +63,15 @@ async def show_interest_info(ctx, li):
 
 async def show_timer_info(ctx, timer_info):
     embed, file = EmbedFactory.timer_view(timer_info)
-    await ctx.send(embed=embed, file=file)
+    sent_message = await ctx.send(embed=embed, file=file)
+    return sent_message
+
+async def edit_embed_periodically(message, timer_duration):
+    for remaining in range(timer_duration, 0, -1):
+        embed, file = EmbedFactory.timer_view({
+                "title": "Study session",
+                "time": remaining,
+                "li_study_image": "https://64.media.tumblr.com/a8a1d3b1d02a14bdc8503659de9e6bb5/230b80535a738a55-a3/s540x810/d82ab5b39886c1a3c90c966bcb00d4dcba30e064.gifv"
+            })
+        await message.edit(embed=embed, attachments=[file])
+        await asyncio.sleep(60)

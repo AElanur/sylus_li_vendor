@@ -1,3 +1,4 @@
+import asyncio
 import time
 from datetime import datetime
 
@@ -15,10 +16,7 @@ class StudyTimer:
     async def start_timer(self):
         timer_amount = self.amount_of_time * self.default_minutes
         while timer_amount:
-            mins, secs = divmod(timer_amount, 60)
-            timer = '{:02d}:{:02d}'.format(mins, secs)
-            print(timer, end='\r')
-            time.sleep(1)
+            await  asyncio.sleep(1)
             timer_amount -= 1
 
     async def pause_timer(self):
