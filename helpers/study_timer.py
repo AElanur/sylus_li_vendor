@@ -5,8 +5,7 @@ from datetime import datetime
 
 class StudyTimer:
     default_minutes = 60
-    def __init__(self, name, amount_of_time):
-        self.name = name
+    def __init__(self, amount_of_time):
         self.amount_of_time = amount_of_time
         self.time_started = None
         self.time_pause = None

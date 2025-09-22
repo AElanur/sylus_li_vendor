@@ -2,7 +2,7 @@ from io import BytesIO
 
 import discord
 from resource.json_readers.readers import get_love_interest, get_specific_li
-from ..embed_paginator.love_interest_paginator import LoveInterestPaginator
+from .embed_paginator.love_interest_paginator import LoveInterestPaginator
 from resource.image.study_image import create_study_image
 
 
@@ -55,3 +55,9 @@ class EmbedFactory:
             embed.set_image(url="attachment://timer.png")
 
             return embed, file
+
+    @staticmethod
+    def timer_minutes_selection():
+        embed = discord.Embed(
+            title="Select study intervals"
+        )

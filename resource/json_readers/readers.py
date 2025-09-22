@@ -22,3 +22,8 @@ def get_sylus_response_upon_picking(name):
     response_list = next((item for item in data['decision'] if name in item), None)
     response = random.choice(response_list[name])
     return response
+
+def get_pomodoro_timers():
+    with open('resource/json/config.json', 'r') as file:
+        data = json.load(file)
+    return data['pomodoro_timers']

@@ -1,0 +1,20 @@
+{
+  "pomodoro_timers": [
+    {
+      "study_timer": 25,
+      "pause_timer": 5
+    },
+    {
+      "study_timer": 30,
+      "pause_timer": 5
+    },
+    {
+      "study_timer": 45,
+      "pause_timer": 10
+    },
+    {
+      "study_timer": 50,
+      "pause_timer": 15
+    }
+  ]
+}
