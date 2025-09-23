@@ -19,14 +19,12 @@ async def pomodoro_command(ctx):
     await create_timer(ctx, selected_time)
 
 async def create_timer(ctx, time):
-    timer = StudyTimer(time['study_timer'])
-
+    timer = StudyTimer(time["study_timer"])
     bot.loop.create_task(timer.start_timer())
     timer_info = {
         "time": timer.amount_of_time,
         "study_image": get_love_interest()
     }
-
     message = await show_timer_info(ctx, timer_info)
     await edit_embed_periodically(message, timer_info)
 
@@ -40,7 +38,8 @@ async def show_timer_info(ctx, timer_info):
     return sent_message
 
 async def edit_embed_periodically(message, timer_info):
-    for remaining in range(timer_info['time'], 0, -1):
+    for remaining in range(timer_info["time"], 0, -1):
+        timer_info["time"] = remaining
         embed, file = EmbedFactory.timer_view(timer_info)
         await message.edit(embed=embed, attachments=[file])
         await asyncio.sleep(60)
