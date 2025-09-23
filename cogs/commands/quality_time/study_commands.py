@@ -4,6 +4,7 @@ from ...embed.embed_factory import EmbedFactory
 from helpers.study_timer import StudyTimer
 from client.sylus_bot_client import bot
 from helpers.components.pomodoro_options import PomodoroOptions
+from resource.json_readers.readers import get_love_interest
 
 @bot.command()
 async def pomodoro_command(ctx):
@@ -19,14 +20,15 @@ async def pomodoro_command(ctx):
 
 async def create_timer(ctx, time):
     timer = StudyTimer(time['study_timer'])
+
     bot.loop.create_task(timer.start_timer())
     timer_info = {
-        "title": "Study session",
         "time": timer.amount_of_time,
-        "li_study_image": "https://64.media.tumblr.com/a8a1d3b1d02a14bdc8503659de9e6bb5/230b80535a738a55-a3/s540x810/d82ab5b39886c1a3c90c966bcb00d4dcba30e064.gifv"
+        "study_image": get_love_interest()
     }
+
     message = await show_timer_info(ctx, timer_info)
-    await edit_embed_periodically(message, timer.amount_of_time)
+    await edit_embed_periodically(message, timer_info)
 
 async def get_pomodoro_timers():
     buttons = PomodoroOptions()
@@ -37,13 +39,8 @@ async def show_timer_info(ctx, timer_info):
     sent_message = await ctx.send(embed=embed, file=file)
     return sent_message
 
-# Consider moving this to embed factory
-async def edit_embed_periodically(message, timer_duration):
-    for remaining in range(timer_duration, 0, -1):
-        embed, file = EmbedFactory.timer_view({
-                "title": "Study session",
-                "time": remaining,
-                "li_study_image": "https://64.media.tumblr.com/a8a1d3b1d02a14bdc8503659de9e6bb5/230b80535a738a55-a3/s540x810/d82ab5b39886c1a3c90c966bcb00d4dcba30e064.gifv"
-            })
+async def edit_embed_periodically(message, timer_info):
+    for remaining in range(timer_info['time'], 0, -1):
+        embed, file = EmbedFactory.timer_view(timer_info)
         await message.edit(embed=embed, attachments=[file])
         await asyncio.sleep(60)

@@ -8,7 +8,13 @@
       "sign": "Libra",
       "evol": "Light",
       "image": "https://static.wikitide.net/loveanddeepspacewiki/2/28/Xavier_Nocturnal_Hunt_portrait.png",
-      "color": "9370DB"
+      "color": "9370DB",
+      "quality_time": [
+        {
+          "activity": "Study",
+          "study_image": "https://images6.alphacoders.com/135/1353283.jpeg"
+        }
+      ]
     },
     {
       "name": "Zayne",
@@ -18,7 +24,13 @@
       "sign": "Virgo",
       "evol": "Ice",
       "image": "https://static.wikitide.net/loveanddeepspacewiki/9/9c/Zayne_Dawn%27s_Shadows_portrait.png",
-      "color": "5AC8FA"
+      "color": "5AC8FA",
+      "quality_time": [
+        {
+          "activity": "Study",
+          "study_image": "https://static.wikia.nocookie.net/loveanddeepspace/images/f/fb/Love_and_Deepspace_Wallpaper_-_Zayne.png/revision/latest/scale-to-width-down/1000?cb=20241201010650"
+        }
+      ]
     },
     {
       "name": "Rafayel",
@@ -28,7 +40,13 @@
       "sign": "Pisces",
       "evol": "Fire",
       "image": "https://static.wikitide.net/loveanddeepspacewiki/a/a5/Rafayel_Oceanic_Nightfall_portrait.png",
-      "color": "800080"
+      "color": "800080",
+      "quality_time": [
+        {
+          "activity": "Study",
+          "study_image": "https://static.wikia.nocookie.net/loveanddeepspace/images/0/07/Love_and_Deepspace_-_Myths_Wallpaper_-_Rafayel.png/revision/latest/scale-to-width-down/1000?cb=20241227094323"
+        }
+      ]
     },
     {
       "name": "Sylus",
@@ -38,7 +56,13 @@
       "sign": "Aries",
       "evol": "Energy Manipulation",
       "image": "https://static.wikitide.net/loveanddeepspacewiki/1/13/Sylus_Searing_Touch_portrait.png",
-      "color": "B22222"
+      "color": "B22222",
+      "quality_time": [
+        {
+          "activity": "Study",
+          "study_image": "https://static.wikia.nocookie.net/loveanddeepspace/images/7/77/Love_and_Deepspace_-_Greedy_Heart_Wallpaper.png/revision/latest/scale-to-width-down/1000?cb=20250106050521"
+        }
+      ]
     },
     {
       "name": "Caleb",
@@ -48,7 +72,13 @@
       "sign": "Gemini",
       "evol": "Gravity Manipulation",
       "image": "https://static.wikitide.net/loveanddeepspacewiki/e/ec/Caleb_Deceptive_Solitude_portrait.png",
-      "color": "FF8C00"
+      "color": "FF8C00",
+      "quality_time": [
+        {
+          "activity": "Study",
+          "study_image": "https://wall.alphacoders.com/big.php?i=1394073"
+        }
+      ]
     }
   ]
 }

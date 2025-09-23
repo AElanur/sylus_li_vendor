@@ -3,7 +3,7 @@ import random
 
 
 def get_love_interest():
-    with open('resource/messages/love_interests.json', 'r') as file:
+    with open('resource/json/messages/love_interests.json', 'r') as file:
         data = json.load(file)
     return data
 
