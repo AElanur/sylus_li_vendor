@@ -16,5 +16,22 @@
       "study_timer": 50,
       "pause_timer": 15
     }
+  ],
+  "timer_buttons": [
+    {
+      "button_function": "pause",
+      "button_icon": "⏸",
+      "button_id": 0
+    },
+    {
+      "button_function": "resume",
+      "button_icon": "▶",
+      "button_id": 1
+    },
+    {
+      "button_function": "delete",
+      "button_icon": "⏹",
+      "button_id": 2
+    }
   ]
 }

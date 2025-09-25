@@ -3,10 +3,12 @@ import asyncio
 from ...embed.embed_factory import EmbedFactory
 from helpers.study_timer import StudyTimer
 from helpers.components.pomodoro_options import PomodoroOptions
+from helpers.components.timer_buttons import TimerButtons
 from resource.json_readers.readers import get_love_interest
 from discord.ext import commands
 
 class StudyCommands(commands.Cog):
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -35,29 +37,31 @@ class StudyCommands(commands.Cog):
                 "time": timer.amount_of_time,
                 "study_image": get_love_interest()
             }
-            await self.show_timer_info(ctx, timer_info)
+            await self.show_timer_info(ctx, timer, timer_info)
         except Exception as e:
             print(f"Creating timer error: {e}")
             raise e
 
     @classmethod
-    async def show_timer_info(cls, ctx, timer_info):
+    async def show_timer_info(cls, ctx, timer, timer_info):
         try:
             timer_embed = EmbedFactory()
+            buttons = TimerButtons(timer)
             embed, file = timer_embed.timer_view(timer_info)
-            sent_message = await ctx.send(embed=embed, file=file)
-            await cls.edit_embed_periodically(timer_embed, sent_message, timer_info)
+            sent_message = await ctx.send(embed=embed, file=file, view=buttons)
+            await cls.edit_embed_periodically(timer_embed, timer, sent_message, timer_info)
         except Exception as e:
             print(f"Timer view error: {e}")
             raise e
 
     @classmethod
-    async def edit_embed_periodically(cls, embed_view, message, timer_info):
+    async def edit_embed_periodically(cls, embed_view, timer, message, timer_info):
         try:
+            buttons = TimerButtons(timer)
             for remaining in range(timer_info["time"], 0, -1):
                 timer_info["time"] = remaining
                 embed, file = embed_view.timer_view(timer_info)
-                await message.edit(embed=embed, attachments=[file])
+                await message.edit(embed=embed, attachments=[file], view=buttons)
                 await asyncio.sleep(60)
         except Exception as e:
             print(f"Editing embed view error: {e}")

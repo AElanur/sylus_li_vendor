@@ -1,6 +1,15 @@
 import json
 import random
+from requests.exceptions import SSLError
 
+def get_timer_buttons():
+    try:
+        with open('resource/json/config.json', 'r', encoding="utf8") as file:
+            data = json.load(file)
+            return data['timer_buttons']
+    except SSLError as ssl_err:
+        print(f"SSL error: {ssl_err}")
+        return None
 
 def get_love_interest():
     with open('resource/json/messages/love_interests.json', 'r') as file:
@@ -24,6 +33,10 @@ def get_sylus_response_upon_picking(name):
     return response
 
 def get_pomodoro_timers():
-    with open('resource/json/config.json', 'r') as file:
-        data = json.load(file)
-    return data['pomodoro_timers']
+    try:
+        with open('resource/json/config.json', 'r', encoding="utf8") as file:
+            data = json.load(file)
+        return data['pomodoro_timers']
+    except SSLError as ssl_err:
+        print(f"SSL error: {ssl_err}")
+        return None
