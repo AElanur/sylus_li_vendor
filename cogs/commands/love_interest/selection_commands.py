@@ -10,11 +10,6 @@ class SelectionCommands(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def sylus(self, interaction: Interaction):
-        print("Your command works, kitten")
-        await interaction.response.send_message("Test, testing kitten")
-
-    @commands.command()
     async def pick_interest(self, interaction: Interaction):
         await interaction.response.send_message(
             "I see you're ready to pick a love interest. I've got a few in stock, "
@@ -37,21 +32,7 @@ class SelectionCommands(commands.Cog):
     #             )
     #             await self.show_interest_info(ctx, chosen)
 
-    @commands.command()
-    async def chosen_interest(self, ctx):
-        love_interest = get_sylus_responses()
-        for interest in love_interest.keys():
-            if interest.lower() in ctx:
-                responses = love_interest[interest]
-                if isinstance(responses[0], list):
-                    responses = [resp[1] for resp in responses]
-                response = random.choice(responses)
-                await ctx.send(response)
-
-    async def show_interests_info(self, interaction):
-        embed = EmbedFactory.love_interests_info_embed()
+    @staticmethod
+    async def show_interests_info(interaction):
+        embed = EmbedFactory.love_interests_info_embed(interaction)
         await embed.send_initial(interaction)
-
-    async def show_interest_info(self, ctx, li):
-        embed = EmbedFactory.chosen_love_interest_info(li)
-        await ctx.send(embed=embed)

@@ -1,6 +1,7 @@
 from io import BytesIO
 
 import requests
+from requests.exceptions import SSLError
 from PIL import Image, ImageDraw, ImageFont
 
 class StudyImage:
@@ -46,10 +47,13 @@ class StudyImage:
 
     def load_image_from_url(self):
         try:
-            response = requests.get(self.URL)
+            response = requests.get(self.URL, verify=True)
             response.raise_for_status()
             img = Image.open(BytesIO(response.content)).convert("RGBA")
             return img
+        except SSLError as ssl_err:
+            print(f"SSL error loading image from {self.URL}: {ssl_err}")
+            return None
         except Exception as e:
             print(f"Error loading image from URL: {e}")
             return None

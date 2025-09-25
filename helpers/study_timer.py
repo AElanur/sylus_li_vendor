@@ -28,11 +28,8 @@ class StudyTimer:
         self.paused = True
 
     async def resume_timer(self):
-        if self.time_started is None:
-            raise ValueError("Timer not started")
-        if self.paused:
-            raise ValueError("Timer already paused")
-        print('Resuming timer')
+        if self.time_started is None or self.paused:
+            raise ValueError("Timer not started or paused")
         pause_time = datetime.now() - self.time_paused
         self.time_started = self.time_started + pause_time
         self.paused = False
