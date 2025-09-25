@@ -1,14 +1,13 @@
 from client.sylus_bot_client import bot
-from . import commands
+from .commands.quality_time import study_commands
 
 async def handle_mentions(message):
     content_lower = message.content.lower()
-    if "pick" in content_lower:
+    if "timer" in content_lower:
         ctx = await bot.get_context(message)
-        await commands.pick_love_interest(ctx, content_lower)
+        await study_commands.pomodoro_command(ctx)
     else:
         await message.channel.send("You're looking for me, kitten?")
-
 
 @bot.event
 async def on_message(message):
