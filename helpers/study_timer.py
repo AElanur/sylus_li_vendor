@@ -1,44 +1,49 @@
 import asyncio
-import time
-from datetime import datetime
-
+from datetime import datetime, timedelta
 
 class StudyTimer:
-    default_minutes = 60
     def __init__(self, minutes):
-        self.total_seconds = minutes * 60
-        self.remaining_seconds = self.total_seconds
-        self._task = None
+        self.total_duration = timedelta(minutes=minutes)
         self._start_time = None
+        self._paused_time = None
+        self._accumulated_pause = timedelta(0)
         self.paused = False
 
-    async def _run_timer(selfself, seconds):
-        await asyncio.sleep(seconds)
+    def start_timer(self):
+        self._start_time = datetime.now()
+        self._accumulated_pause = timedelta(0)
+        self.paused = False
 
-    async def start_timer(self):
-        if self._task is None or self._task.done():
-            self._start_time = datetime.now()
-            elapsed = (datetime.now() - self._start_time).total_seconds()
-            self.remaining_seconds -= elapsed
-            self.paused = False
-        else:
-            print("Timer already running")
-
-    async def pause_timer(self):
-        if self._task and not self._task.done() and not self.paused:
-            self._task.cancel()
-            elapsed = (datetime.now() - self._start_time).total_seconds()
-            self.remaining_seconds -= elapsed
+    def pause_timer(self):
+        if not self.paused:
+            self._paused_time = datetime.now()
             self.paused = True
-            print(f"Timer paused with {self.remaining_seconds:.2f} seconds remaining")
-        else:
-            print("Timer is not running or already paused")
 
-    async def resume_timer(self):
+    def resume_timer(self):
         if self.paused:
-            self._start_time = datetime.now()
-            self._task = asyncio.create_task(self._run_timer(self.remaining_seconds))
+            pause_duration = datetime.now() - self._paused_time
+            self._accumulated_pause += pause_duration
             self.paused = False
-            print(f"Timer resumed with {self.remaining_seconds:.2f} seconds remaining")
+
+    def get_remaining_minutes(self):
+        if not self._start_time:
+            return int(self.total_duration.total_seconds() // 60)
+        if self.paused:
+            elapsed = self._paused_time - self._start_time - self._accumulated_pause
         else:
-            print("Timer already running")
+            elapsed = datetime.now() - self._start_time - self._accumulated_pause
+        remaining = self.total_duration - elapsed
+        if remaining.total_seconds() < 0:
+            return 0
+        return int(remaining.total_seconds() // 60)
+
+    def is_finished(self):
+        return self.get_remaining_minutes() == 0
+
+async def timer_update_loop(timer, update_callback):
+    while not timer.is_finished():
+        if not timer.paused:
+            remaining = timer.get_remaining_minutes()
+            await update_callback(remaining)
+        await asyncio.sleep(60)
+    await update_callback(timedelta(0))

@@ -32,9 +32,10 @@ class StudyCommands(commands.Cog):
     async def create_timer(self, ctx, time):
         try:
             timer = StudyTimer(time["study_timer"])
-            self.bot.loop.create_task(timer.start_timer())
+            timer.start_timer()
+            # Consider changing this to look better!
             timer_info = {
-                "time": timer.amount_of_time,
+                "time": timer.get_remaining_minutes(),
                 "study_image": get_love_interest()
             }
             await self.show_timer_info(ctx, timer, timer_info)
@@ -56,13 +57,21 @@ class StudyCommands(commands.Cog):
 
     @classmethod
     async def edit_embed_periodically(cls, embed_view, timer, message, timer_info):
-        try:
-            buttons = TimerButtons(timer)
-            for remaining in range(timer_info["time"], 0, -1):
-                timer_info["time"] = remaining
+        buttons = TimerButtons(timer)
+        while not timer.is_finished():
+            if timer.paused:
+                await asyncio.sleep(5)
+                timer_info["time"] = timer.get_remaining_minutes()
                 embed, file = embed_view.timer_view(timer_info)
                 await message.edit(embed=embed, attachments=[file], view=buttons)
-                await asyncio.sleep(60)
-        except Exception as e:
-            print(f"Editing embed view error: {e}")
-            raise e
+                continue
+
+            remaining_minutes = timer.get_remaining_minutes()
+            timer_info["time"] = remaining_minutes
+            embed, file = embed_view.timer_view(timer_info)
+            await message.edit(embed=embed, attachments=[file], view=buttons)
+            await asyncio.sleep(60)
+
+        timer_info["time"] = 0
+        embed, file = embed_view.timer_view(timer_info)
+        await message.edit(embed=embed, attachments=[file], view=buttons)

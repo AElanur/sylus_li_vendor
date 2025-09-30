@@ -29,9 +29,10 @@ class TimerButtons(View):
 
     async def pause_timer(self):
         print("the timer is paused")
-        await self.timer.pause_timer()
-        return self.timer.amount_of_time
+        print(f"Remaining minutes: {self.timer.get_remaining_minutes()}")
+        self.timer.pause_timer()
+        return self.timer.get_remaining_minutes()
 
     async def resume_timer(self):
-        await self.timer.resume_timer()
-        return self.timer.amount_of_time
+        self.timer.resume_timer()
+        return self.timer.get_remaining_minutes()
