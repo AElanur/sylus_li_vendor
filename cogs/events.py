@@ -10,7 +10,7 @@ from .commands.quality_time import study_commands
 #         await message.channel.send("You're looking for me, kitten?")
 
 @bot.event
-async def on_message(message):
+async def on_command(message):
     if message.author == bot.user:
         return
 

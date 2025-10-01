@@ -22,17 +22,18 @@ class TimerButtons(View):
 
             async def timer_button_callback(interaction, btn=button_data):
                 if btn['button_function'] == "pause":
+                    await (
+                        interaction.
+                           response.
+                           send_message("I've paused the timer for you, kitten. "
+                                        "Let me know if you want me to resume it."))
                     await self.pause_timer()
 
             button.callback = timer_button_callback
             self.add_item(button)
 
     async def pause_timer(self):
-        print("the timer is paused")
-        print(f"Remaining minutes: {self.timer.get_remaining_minutes()}")
         self.timer.pause_timer()
-        return self.timer.get_remaining_minutes()
 
     async def resume_timer(self):
         self.timer.resume_timer()
-        return self.timer.get_remaining_minutes()

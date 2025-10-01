@@ -1,6 +1,7 @@
 import asyncio
 from datetime import datetime, timedelta
 
+
 class StudyTimer:
     def __init__(self, minutes):
         self.total_duration = timedelta(minutes=minutes)
@@ -32,7 +33,9 @@ class StudyTimer:
             elapsed = self._paused_time - self._start_time - self._accumulated_pause
         else:
             elapsed = datetime.now() - self._start_time - self._accumulated_pause
+
         remaining = self.total_duration - elapsed
+
         if remaining.total_seconds() < 0:
             return 0
         return int(remaining.total_seconds() // 60)
