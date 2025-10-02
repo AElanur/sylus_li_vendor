@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 class StudyTimer:
     def __init__(self, minutes):
-        self.total_duration = timedelta(minutes=minutes)
+        self.total_duration = timedelta(minutes=minutes+1)
         self._start_time = None
         self._paused_time = None
         self._accumulated_pause = timedelta(0)

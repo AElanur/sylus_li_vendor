@@ -60,5 +60,3 @@ class StudyEmbed(EmbedFactory):
             await self.message.edit(embed=self.embed, attachments=[self.file], view=self.get_buttons())
         except Exception as e:
             print(f"Error updating embed: {e}")
-
-
