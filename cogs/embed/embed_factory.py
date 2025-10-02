@@ -1,9 +1,7 @@
-from io import BytesIO
-
 import discord
 from resource.json_readers.readers import get_love_interest
 from .embed_paginator.love_interest_paginator import LoveInterestPaginator
-from resource.image.study_image import StudyImage
+
 
 
 class EmbedFactory:
@@ -33,19 +31,5 @@ class EmbedFactory:
             print(f"Paginator error: {e}")
             raise e
 
-    def timer_view(self, timer_info):
-        try:
-            image_creator = StudyImage(timer_info)
-            image = image_creator.create_study_image()
-            with BytesIO() as image_binary:
-                image.save(image_binary, 'PNG')
-                image_binary.seek(0)
-                file = discord.File(fp=image_binary, filename="timer.png")
-
-                self.embed.title="Study session"
-                self.embed.set_image(url="attachment://timer.png")
-
-                return self.embed, file
-        except Exception as e:
-            print(f"Timer view error: {e}")
-            raise e
+    def create_timer_embed(self):
+        raise NotImplementedError("Subclasses must implement this method!")

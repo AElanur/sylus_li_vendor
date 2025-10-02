@@ -5,9 +5,9 @@ from requests.exceptions import SSLError
 from PIL import Image, ImageDraw, ImageFont
 
 class StudyImage:
-    def __init__(self, study_info):
-        self.URL = study_info["study_image"]["love_interests"][3]["quality_time"][0]["study_image"]
-        self.TIME = study_info["time"]
+    def __init__(self, image, time):
+        self.URL = image["love_interests"][3]["quality_time"][0]["study_image"]
+        self.TIME = time
         self.FONT_PATH = "arial.ttf"
         self.FONT_SIZE = 70
         self.FONT_COLOR = (255, 255, 255)
