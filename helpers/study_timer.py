@@ -1,4 +1,3 @@
-import asyncio
 from datetime import datetime, timedelta
 
 
@@ -42,11 +41,3 @@ class StudyTimer:
 
     def is_finished(self):
         return self.get_remaining_minutes() == 0
-
-async def timer_update_loop(timer, update_callback):
-    while not timer.is_finished():
-        if not timer.paused:
-            remaining = timer.get_remaining_minutes()
-            await update_callback(remaining)
-        await asyncio.sleep(60)
-    await update_callback(timedelta(0))
