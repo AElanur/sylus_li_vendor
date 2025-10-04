@@ -19,8 +19,8 @@ class StudyCommands(commands.Cog):
                 view=view
             )
             selected_time = await view.wait_for_selection()
-            study_events = StudyEvents()
-            await study_events.start_study_timer(ctx, selected_time)
+            study_events = StudyEvents(ctx, selected_time)
+            await study_events.start_study_timer()
             await prompt_msg.delete()
         except Exception as e:
             print(f"Creating timer error: {e}")

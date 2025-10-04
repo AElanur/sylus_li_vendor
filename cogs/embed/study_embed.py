@@ -32,19 +32,11 @@ class StudyEmbed(EmbedFactory):
                 self.embed.title = "Study session"
                 self.embed.set_image(url="attachment://timer.png")
                 self.message = await self.ctx.send(embed=self.embed, file=self.file, view=self.get_buttons())
-
-                self.update_task = self.update_loop.start()
-
         except Exception as e:
             print(f"Timer view error: {e}")
             raise e
 
-    @tasks.loop(seconds=60)
-    async def update_loop(self):
-        if self.study_timer.is_finished():
-            self.update_task.cancel()
-            return
-
+    async def edit_embed(self):
         try:
             time = self.study_timer.get_remaining_minutes()
             image_creator = StudyImage(get_love_interest(), time)
@@ -57,6 +49,6 @@ class StudyEmbed(EmbedFactory):
                 self.embed.title = "Study session"
                 self.embed.set_image(url="attachment://timer.png")
 
-            await self.message.edit(embed=self.embed, attachments=[self.file], view=self.get_buttons())
+                await self.message.edit(embed=self.embed, attachments=[self.file], view=self.get_buttons())
         except Exception as e:
             print(f"Error updating embed: {e}")

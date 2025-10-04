@@ -25,6 +25,9 @@ class StudyTimer:
             self._accumulated_pause += pause_duration
             self.paused = False
 
+    def delete_timer(self):
+        self.total_duration = 0
+
     def get_remaining_minutes(self):
         if not self._start_time:
             return int(self.total_duration.total_seconds() // 60)
